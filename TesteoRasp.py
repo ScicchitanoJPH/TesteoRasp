@@ -13,20 +13,22 @@ msg=0
 StatusSalida="Sin Testear"
 StatusEntradas="Sin Testear"
 
-#Variables de pines
+#Bornera de salida
 Pin_Contacto1=5
 Pin_Contacto2=6
 Pin_Contacto3=26
 Pin_Contacto4=16
-Pin_Contacto5=27
-Pin_Contacto6=17
-Pin_Contacto7=24
-Pin_Contacto8=23
+#Pin_Contacto5=27
+#Pin_Contacto6=17
+#Pin_Contacto7=24
+#Pin_Contacto8=23
 
+#Pines
 Pin_LED1=13
 Pin_LED2=19
-Pin_LED3=12
+#Pin_LED3=12
 
+#Bornera de entrada
 Pin_IN1=21
 Pin_IN2=20
 
@@ -37,14 +39,14 @@ GPIO.setup(Pin_Contacto1, GPIO.OUT)
 GPIO.setup(Pin_Contacto2, GPIO.OUT)
 GPIO.setup(Pin_Contacto3, GPIO.OUT)
 GPIO.setup(Pin_Contacto4, GPIO.OUT)
-GPIO.setup(Pin_Contacto5, GPIO.OUT)
-GPIO.setup(Pin_Contacto6, GPIO.OUT)
-GPIO.setup(Pin_Contacto7, GPIO.OUT)
-GPIO.setup(Pin_Contacto8, GPIO.OUT)
+#GPIO.setup(Pin_Contacto5, GPIO.OUT)
+#GPIO.setup(Pin_Contacto6, GPIO.OUT)
+#GPIO.setup(Pin_Contacto7, GPIO.OUT)
+#GPIO.setup(Pin_Contacto8, GPIO.OUT)
 
 GPIO.setup(Pin_LED1, GPIO.OUT)
 GPIO.setup(Pin_LED2, GPIO.OUT)
-GPIO.setup(Pin_LED3, GPIO.OUT)
+#GPIO.setup(Pin_LED3, GPIO.OUT)
 
 GPIO.setup(Pin_IN1, GPIO.IN)
 GPIO.setup(Pin_IN2, GPIO.IN)
@@ -57,28 +59,28 @@ def ContactosON():
     GPIO.output(Pin_Contacto2, True)
     GPIO.output(Pin_Contacto3, True)
     GPIO.output(Pin_Contacto4, True)
-    GPIO.output(Pin_Contacto5, True)
-    GPIO.output(Pin_Contacto6, True)
-    GPIO.output(Pin_Contacto7, True)
-    GPIO.output(Pin_Contacto8, True)
+    #GPIO.output(Pin_Contacto5, True)
+    #GPIO.output(Pin_Contacto6, True)
+    #GPIO.output(Pin_Contacto7, True)
+    #GPIO.output(Pin_Contacto8, True)
     
     GPIO.output(Pin_LED1, True)
     GPIO.output(Pin_LED2, True)
-    GPIO.output(Pin_LED3, True)
+    #GPIO.output(Pin_LED3, True)
 
 def ContactosOFF():
     GPIO.output(Pin_Contacto1, False)
     GPIO.output(Pin_Contacto2, False)
     GPIO.output(Pin_Contacto3, False)
     GPIO.output(Pin_Contacto4, False)
-    GPIO.output(Pin_Contacto5, False)
-    GPIO.output(Pin_Contacto6, False)
-    GPIO.output(Pin_Contacto7, False)
-    GPIO.output(Pin_Contacto8, False)
+    #GPIO.output(Pin_Contacto5, False)
+    #GPIO.output(Pin_Contacto6, False)
+    #GPIO.output(Pin_Contacto7, False)
+    #GPIO.output(Pin_Contacto8, False)
     
     GPIO.output(Pin_LED1, False)
     GPIO.output(Pin_LED2, False)
-    GPIO.output(Pin_LED3, False)
+    #GPIO.output(Pin_LED3, False)
 
 def SalidasTest():
     print('Verifique que todos los contactores y leds esten encendidos\n')
@@ -114,7 +116,7 @@ def EntradasTest():
 
     t0=dt.datetime.now()
     t1=dt.datetime.now()
-    dif=0
+    dif=int((t1-t0).total_seconds())
     aux_dif=0
     while GPIO.input(Pin_IN2):
         dif=int((t1-t0).total_seconds())
@@ -124,7 +126,7 @@ def EntradasTest():
         if(dif>=timeout):
             print('Se ha superado el tiempo de espera')
             return "ERROR"
-        t1=dt.time()
+        t1=dt.datetime.now()
     return "OK"
 
 while 1:
