@@ -133,6 +133,7 @@ while 1:
 
     if StatusSalida=="OK" and StatusEntradas=="OK":
         print(Style.BRIGHT + Fore.GREEN + "******** Todo funciona OK, Proceso Finalizado ********")
+        break
 
     print("Ingrese el numero que desea testear:\n")
     if StatusSalida=="Sin Testear":
