@@ -2,6 +2,8 @@ import colorama
 import RPi.GPIO as GPIO
 import time
 import datetime as dt
+import serial  
+import os, time
 from colorama import Fore , Style
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
@@ -12,6 +14,7 @@ msg=0
 
 StatusSalida="Sin Testear"
 StatusEntradas="Sin Testear"
+StatusSerial="Sin Testear"
 
 #Bornera de salida
 Pin_Contacto1=5
@@ -129,9 +132,29 @@ def EntradasTest():
         t1=dt.datetime.now()
     return "OK"
 
+
+def SerialTest():
+    # Enable Serial Communication
+    port = serial.Serial("/dev/ttyS0", baudrate=9600, timeout=1)
+    port.flushInput()
+    msg='Test'
+    port.write(msg)
+    rcv = port.readline()
+    print(rcv)
+    if rcv == "Test":
+        print(Fore.GREEN +"El puerto Serie FUNCIONA")
+        return "OK"
+    else:
+        print(Fore.RED +"El puerto Serie NO FUNCIONA")
+        return "ERROR"
+
+
+
+
+
 while 1:
 
-    if StatusSalida=="OK" and StatusEntradas=="OK":
+    if StatusSalida=="OK" and StatusEntradas=="OK" and StatusSerial=="OK":
         print(Style.BRIGHT + Fore.GREEN + "******** Todo funciona OK, Proceso Finalizado ********")
         break
 
@@ -151,9 +174,18 @@ while 1:
     if StatusEntradas=="ERROR":
         print(Fore.RED + "2) Entradas\n")
 
+    if StatusSerial=="Sin Testear":
+        print("3) Serial\n")
+    if StatusSerial=="OK":
+        print(Fore.GREEN + "3) Serial\n")
+    if StatusSerial=="ERROR":
+        print(Fore.RED + "3) Serial\n")
+
     Test=int(input())
     if Test==1:
         StatusSalida = SalidasTest()
     if Test==2:
         StatusEntradas = EntradasTest()
+    if Test==3:
+        StatusSerial = SerialTest()
 
